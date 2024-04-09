@@ -8,5 +8,10 @@ app_name = 'users'  # Add this line to specify the app name
 urlpatterns = [
     # Login page
     path('login/', LoginView.as_view(template_name='users/login.html'), name='login'),
+    # Registration page
+    path('register/', views.register, name='register'),
+    # Logout page
+    path('logout/', views.logout_view, name='logout'),
+
 
 ]
