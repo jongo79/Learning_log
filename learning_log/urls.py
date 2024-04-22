@@ -22,6 +22,7 @@ urlpatterns = [
     path('', include(('learning_logs.urls', 'learning_logs'))),
     # Users URL patterns
     path('users/', include('users.urls', namespace='users')),
+    # path('users/profile/', views.profile_view, name='profile'),
 
 
 ]

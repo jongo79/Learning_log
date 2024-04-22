@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'learning_logs',
     'users',
+    # Third party apps.
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [
