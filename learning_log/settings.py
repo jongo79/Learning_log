@@ -21,12 +21,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")'django-insecure-uzqd##o!vvjyc+80=*a291x&a)z2)m*@+k18ht9ki^@w4t+57b'
+SECRET_KEY = os.environ.get("SECRET_KEY", "s3cr3t_k3y_f0r_Django_app")
+#'django-insecure-uzqd##o!vvjyc+80=*a291x&a)z2)m*@+k18ht9ki^@w4t+57b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lowwer() == "True"
+DEBUG = os.environ.get("DEBUG", "False").lower() == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+# Define the default value
+DEFAULT_ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# Check if the ALLOWED_HOSTS environment variable is set
+# If set, split the value by spaces and use it as ALLOWED_HOSTS
+# Otherwise, use the default value
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split() or ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -85,7 +92,10 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = dj_database_url.parse('postgres://ll_render_user:StW2JdDIBxl5IQVgOmPm9PRaVy4jX5QU@dpg-col2icq0si5c73e432p0-a.oregon-postgres.render.com/ll_render')
+database_url = os.environ.get("DATABASE_URL")
+
+DATABASES['default'] = dj_database_url.parse(database_url)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -120,6 +130,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
 
 STATIC_URL = 'static/'
 
