@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Created-By: 17.0.10 (Private Build)
+
+Name: dbeaver.png
+SHA-256-Digest: U1NpGXwsiV280t/UPhlZ4etxTdAg+LY+wz/XkhssocU=
+
