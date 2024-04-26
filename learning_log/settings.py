@@ -31,10 +31,14 @@ DEBUG = 'RENDER' not in os.environ
 
 # Define the default value
 #DEFAULT_ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+#ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split() or DEFAULT_ALLOWED_HOSTS
 
 ALLOWED_HOSTS = []
-#ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split() or DEFAULT_ALLOWED_HOSTS
-RENDER_EXTERNAL_HOSTNAME = os.environ['RENDER_EXTERNAL_HOSTNAME']
+# Add localhost to ALLOWED_HOSTS for local development
+ALLOWED_HOSTS.append('127.0.0.1')
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
@@ -104,15 +108,28 @@ else:
     }
  """
 
-DATABASES = {
+""" DATABASES = {
     'default': dj_database_url.config(
 
         default='postgresql://postgres:postgres@localhost/postgres',
         conn_max_age=600
     )
 }
-
-
+ """
+# Check if DATABASE_URL environment variable is set
+if 'DATABASE_URL' in os.environ:
+    # Use PostgreSQL database specified in DATABASE_URL
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600)
+    }
+else:
+    # Use SQLite for local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
